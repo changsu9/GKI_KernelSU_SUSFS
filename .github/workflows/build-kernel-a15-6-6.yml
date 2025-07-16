@@ -46,12 +46,12 @@ on:
         type: boolean
         default: false
       get_manager:
-        description: '是否同时获取最新KSU管理器?（实验性功能，报错请关闭）'
+        description: '获取最新KSU管理器和SUS模块?'
         required: true
         type: boolean
         default: true
       fast:
-        description: '编译加速(实验性):平均加快7分钟'
+        description: '编译加速(无法自定义版本):平均加快7分钟'
         required: false
         type: boolean
         default: false
