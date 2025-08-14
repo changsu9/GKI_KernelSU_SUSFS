@@ -42,6 +42,10 @@ on:
         required: false
         type: boolean
         default: false
+      build_time:
+        description: '设置内核构建时间(格式见仓库说明)'
+        required: false
+        type: string
 
 jobs:
   build-kernel-a14-6-1-kernelsu-susfs:
@@ -49,6 +53,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - sub_level: "57"
+            os_patch_level: "2024-01"
           - sub_level: "68"
             os_patch_level: "2024-03"
           - sub_level: "75"
@@ -89,3 +95,4 @@ jobs:
       supp_op: ${{ inputs.supp_op || false }}
       fast: ${{ inputs.fast }}
       onlyAk3: ${{ inputs.onlyAk3 || false }}
+      build_time: ${{ inputs.build_time || '' }}

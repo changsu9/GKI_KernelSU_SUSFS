@@ -4,14 +4,18 @@
 >
 > 第一次使用务必**详细阅读**以下内容，不要因为懒惰而占用他人时间！
 >
-> 因SUKISU和NEXT已不在维护旧版本susfs的分支，编译时你无论选择Dev或Stable，都是一样的结果
+> 因SUKISU和NEXT已不在维护旧版本susfs的分支，编译时你无论选择Dev或Stable，都是一样的结果；
+>且mksu也无标准/开发版本概念，无论选择哪个都一样，但（KSU的稳定版是最新TAG，也就是[v1.0.5](https://github.com/tiann/KernelSU/tree/v1.0.5)，4月22日发布的那个）
 > 
 > 最近更新：
-> 
-> 1. 修复next编译报错
-> 2. 优化获取KSU管理器功能（已稳定不报错），并额外获取最新sus模块
-> 3. Release 优化自动获取KSU版本和SUSFS版本，减少维护成本
-> 4. 挖坑，之后可能出一个一加仓库...
+> 1. 添加 6.1.57内核版本
+> 2. 移除内核BBR等配置
+> 3. KPROBES(KSU/MKSU)和VFS(NEXT/SUKISU)钩子区分标注
+
+### 无限重启？
+1. 一加：colorOS15魔改过f2fs，已经不兼容GKI的f2fs，除非进入rec清除Data重启
+2. 小米：一些机型因为启动引导因avb验证导致无法启动分区，如红米k50，需要关闭avb验证（https://magiskcn.com/disable-avb）
+3. 其他：其他手机也可能因为相似的兼容问题，如果有可以补充。。。
 
 ### Tips
 1. 关于安全补丁
@@ -35,9 +39,8 @@
 | --- | --- |
 | [KernelSU](https://kernelsu.org/zh_CN/) | 包括**原版、MKSU、SUKISU、NEXT** |
 | [SUSFS4](https://gitlab.com/simonpunk/susfs4ksu) | 在内核层面辅助KSU隐藏的功能补丁 |
-| [BBR](https://blog.thinkin.top/archives/ke-pu-bbrdao-di-shi-shi-me) | TCP拥塞控制算法，使网络更快？ |
-| [Wireguard](https://zh.wikipedia.org/wiki/WireGuard) | 参考左侧wiki链接 |
 | [LZ4KD](https://github.com/ShirkNeko/SukiSU_patch/tree/main/other) | 听说是来自HUAWEI source的ZRAM算法，补丁由[云彩之枫](http://www.coolapk.com/u/24963680)移植 |
+| [LZ4 1.10.0](https://github.com/lz4/lz4/releasesr) | GKI内核默认的LZ4算法升级 |
 
 <details>
 
@@ -47,11 +50,25 @@
 
 </details>
 
-### KSU管理器
-在编译完成后，你会看到类似 `Next-Manager(12600)`的文件，简单来说这就是与内核一同上传的***最新管理器***。
-![例子](./assets/get_manager.gif)
-同样的，在[Release](https://github.com/zzh20188/GKI_KernelSU_SUSFS/releases)也同样包含***最新管理器***！
-![release](./assets/release_manager.gif)
+### KSU管理器 & SUSFS模块
+由于一些原因，你不可缺少最新管理器和模块(见下)
+> ##### 如果长期不更新管理器，而只更新内核也就是使用ak3刷入，那么软件显示可能异常，会显得你和别人不一样，如SUKISU显示LKM，NEXT一些参数显示未知
+> ##### SUKISU内置SUSFS功能相对模块，缺失try mount/umount数量显示功能，以及自定义界面的一些选项
+#### 在编译完成后，你会看到类似 `SukiSU-Manager(13235)` 和 `susfs-release-1.5.2+_537cdba` 的压缩包，简单来说这就是与内核一同上传的***最新管理器与susfs模块***。
+
+![例子](./assets/action.png)
+
+#### 同样的，在[Release](https://github.com/zzh20188/GKI_KernelSU_SUSFS/releases)的底部也同样包含它们
+
+![release](./assets/release.png)
+
+
+### 内核构建时间
+在构建内核时，可以指定内核的构建时间。在Action的输入框中输入指定格式的字符即可。
+如：**Thu Jul 17 14:26:50 UTC 2025**
+> 这个时间表示的是2025年7月17日的14:26:50（协调世界时间，UTC）。
+当你没有输入指定时间，则为构建内核时的时间
+
 
 ### 紧急救援指南
 
@@ -101,7 +118,6 @@ $ fastboot flash boot <boot.img文件全称>
 > **3. 编译优化建议**  
 > 修改 [配置文件](.github/workflows/kernel-a12-5.10.yml)（如kernel-a12-5.10.yml）：
 > - ▶️ 删除/注释不需要的GKI版本配置（**加速编译**）
-> - 📅 内核构建时间，参照[gki-kernel.yml](.github/workflows/gki-kernel.yml) 文件 **`第552行左右的注释`** 进行修改
 
 ### 更多内容
 可以提及您的意见...我会尝试！
