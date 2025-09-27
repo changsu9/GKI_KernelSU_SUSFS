@@ -8,9 +8,7 @@
 >且mksu也无标准/开发版本概念，无论选择哪个都一样，但（KSU的稳定版是最新TAG，也就是[v1.0.5](https://github.com/tiann/KernelSU/tree/v1.0.5)，4月22日发布的那个）
 > 
 > 最近更新：
-> 1. 添加 6.1.57内核版本
-> 2. 移除内核BBR等配置
-> 3. KPROBES(KSU/MKSU)和VFS(NEXT/SUKISU)钩子区分标注
+> 1. 全部 KSU 恢复更新，SUSFS 1.5.10，ksu和mksu切换为kprobe钩子正常使用
 
 ### 无限重启？
 1. 一加：colorOS15魔改过f2fs，已经不兼容GKI的f2fs，除非进入rec清除Data重启
