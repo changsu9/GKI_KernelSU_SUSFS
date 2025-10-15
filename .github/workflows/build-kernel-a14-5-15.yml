@@ -25,7 +25,7 @@ on:
           - Stable(标准)
           - Dev(开发)
           - Other(其他/指定)
-        default: Dev(开发)
+        default: Stable(标准)
       version:
         description: '自定义版本名(如5.15.167后面的字符/留空则使用默认版本号)'
         required: false
@@ -36,6 +36,11 @@ on:
         type: string
       use_zram:
         description: '是否开启增加更多ZRAM算法?'
+        required: true
+        type: boolean
+        default: true
+      use_bbg:
+        description: '是否开启BBG防格机补丁?'
         required: true
         type: boolean
         default: true
@@ -66,6 +71,7 @@ jobs:
       kernelsu_branch: ${{ inputs.kernelsu_branch }}
       version: ${{ inputs.version }}
       use_zram: ${{ inputs.use_zram }}
+      use_bbg: ${{ inputs.use_bbg }}
       use_kpm: ${{ inputs.use_kpm }}
       onlyAk3: ${{ inputs.onlyAk3 }}
       build_time: ${{ inputs.build_time }}

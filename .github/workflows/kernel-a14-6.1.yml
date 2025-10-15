@@ -27,16 +27,16 @@ on:
         required: true
         type: boolean
         default: true
+      use_bbg:
+        description: '是否开启BBG防格机补丁?'
+        required: true
+        type: boolean
+        default: true
       use_kpm:
         description: '是否开启KPM功能?'
         required: true
         type: boolean
         default: true
-      fast:
-        description: '编译加速(实验性):平均加快7分钟'
-        required: false
-        type: boolean
-        default: false
       onlyAk3:
         description: '仅上传AK3压缩包?(无boot,下载更快)'
         required: false
@@ -75,8 +75,10 @@ jobs:
             os_patch_level: "2025-01"
           - sub_level: "124"
             os_patch_level: "2025-02"
-          # - sub_level: "128"
-          #   os_patch_level: "2025-03"
+          - sub_level: "138"
+            os_patch_level: "2025-06"
+          - sub_level: "145"
+            os_patch_level: "2025-09"
           # - sub_level: "X"
           #   os_patch_level: "lts"
     uses: ./.github/workflows/gki-kernel.yml
@@ -91,8 +93,8 @@ jobs:
       kernelsu_branch: ${{ inputs.kernelsu_branch || 'Dev' }}
       version: ${{ inputs.version || '' }}
       use_zram: ${{ inputs.use_zram }}
+      use_bbg: ${{ inputs.use_bbg }}
       use_kpm: ${{ inputs.use_kpm }}
       supp_op: ${{ inputs.supp_op || false }}
-      fast: ${{ inputs.fast }}
       onlyAk3: ${{ inputs.onlyAk3 || false }}
       build_time: ${{ inputs.build_time || '' }}

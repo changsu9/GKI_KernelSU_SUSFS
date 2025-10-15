@@ -25,7 +25,7 @@ on:
           - Stable(标准)
           - Dev(开发)
           - Other(其他/指定)
-        default: Dev(开发)
+        default: Stable(标准)
       version:
         description: '自定义版本名(如位于6.6.77-android15-8<自定义版本名>/留空则使用默认版本号)'
         required: false
@@ -39,9 +39,14 @@ on:
         required: true
         type: boolean
         default: true
+      use_bbg:
+        description: '是否开启BBG防格机补丁?（报错请关闭）'
+        required: true
+        type: boolean
+        default: true
       use_kpm:
         description: '是否开启KPM功能?'
-        required: false
+        required: true
         type: boolean
         default: true
       supp_op:
@@ -54,11 +59,6 @@ on:
         required: true
         type: boolean
         default: true
-      fast:
-        description: '编译加速(无法自定义版本):平均加快7分钟'
-        required: false
-        type: boolean
-        default: false
       onlyAk3:
         description: '仅上传AK3压缩包?(无boot,下载更快)'
         required: false
@@ -67,7 +67,7 @@ on:
 
 jobs:
 
- build-kernel-a15-6-6:
+  build-kernel-a15-6-6:
     uses: ./.github/workflows/kernel-a15-6.6.yml
     secrets: inherit
     with:
@@ -76,14 +76,15 @@ jobs:
       kernelsu_branch: ${{ inputs.kernelsu_branch }}
       version: ${{ inputs.version }}
       use_zram: ${{ inputs.use_zram }}
+      use_bbg: ${{ inputs.use_bbg }}
       use_kpm: ${{ inputs.use_kpm }}
       supp_op: ${{ inputs.supp_op }}
-      fast: ${{ inputs.fast }}
       onlyAk3: ${{ inputs.onlyAk3 }}
       build_time: ${{ inputs.build_time }}
- get-ksu-manager:
+  get-ksu-manager:
     if: ${{ inputs.get_manager }}
     uses: ./.github/workflows/get-manager.yml
     secrets: inherit
     with:
       kernelsu_variant: ${{ inputs.kernelsu_variant }}
+
